@@ -1,0 +1,7 @@
+- name: test vars
+  command: echo "{{ echo_var }}"
+  register: hello
+  tags:
+    - echo_test
+
+- debug: msg="{{ hello.stdout }}"

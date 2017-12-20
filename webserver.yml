@@ -1,0 +1,7 @@
+- name: runs web server roles
+  hosts: webserver
+  become: sudo
+  vars_files:
+    - ./group_vars/web.yml
+  roles:
+    - { role: base, tags: base }
