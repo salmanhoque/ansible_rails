@@ -1,0 +1,30 @@
+- name: update ssh config
+  copy:
+    src: files/sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart ssh
+- name: add aliases
+  copy:
+    src: files/00-aliases.sh
+    dest: /etc/profile.d/oo-aliases.sh
+    owner: root
+    group: root
+    mode: 0644
+- name: add tmux config
+  copy:
+    src: files/tmux.conf
+    dest: /etc/tmux.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: add vim settings
+  copy:
+    src: files/vimrc
+    dest: /etc/vim/vimrc.local
+    owner: root
+    group: root
+    mode: 0644
