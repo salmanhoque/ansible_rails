@@ -1,6 +1,6 @@
 - name: runs web server roles
   hosts: webserver
-  become: sudo
+  become: true
   vars_files:
     - ./group_vars/web.yml
   roles:

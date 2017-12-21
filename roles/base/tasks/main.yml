@@ -1,7 +1,42 @@
-- name: test vars
-  command: echo "{{ echo_var }}"
-  register: hello
-  tags:
-    - echo_test
+- name: add ruby apt signing key
+  apt_key:
+    url: http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0xF5DA5F09C3173AA6
+    id: 80F70E11F0F0D5F10CB20E62F5DA5F09C3173AA6
+    state: present
 
-- debug: msg="{{ hello.stdout }}"
+- name: add ruby repository
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main
+    state: present
+
+- name: add nodejs apt signing key
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+    id: "68576280"
+    state: present
+
+- name: add nodejs repository
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_8.x trusty main
+    state: present
+
+- name: add yarn apt signing key
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    state: present
+
+- name: add yarn repository
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
+
+- name: update apt packages
+  apt: 
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install required software packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ required_softwares }}"
