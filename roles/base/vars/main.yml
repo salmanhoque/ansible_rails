@@ -3,7 +3,7 @@ required_softwares:
   - build-essential
   - curl
   - fail2ban
-  - git
+  - git-core
   - htop
   - screen
   - sysstat
@@ -29,3 +29,11 @@ required_softwares:
   - yarn
   - ruby2.3
   - ruby2.3-dev
+  - libssl-dev
+  - libreadline-dev
+  - libcurl4-openssl-dev
+  - libxslt1-dev
+  - libxml2-dev
+  - libyaml-dev
+  - libffi-dev
+  - libpq-dev
