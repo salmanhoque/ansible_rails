@@ -3,7 +3,7 @@
   - [ ] Database
   - [ ] Database permission
 - [ ] Web server
-  - [ ] nginx
+  - [X] nginx
   - [ ] nginx config
 - [ ] App deploy
   - [ ] clone app to /srv/app

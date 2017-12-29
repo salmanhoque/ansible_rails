@@ -1,0 +1,45 @@
+- name: Install required software packages for web server
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: "{{ required_webserver_softwares }}"
+- name: update nginx config
+  copy:
+    src: files/nginx_default_config
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
+
+- name: create app user
+  user:
+    name: deployer
+    shell: /bin/bash
+    groups: www-data
+    createhome: yes
+    state: present
+- name: create app directory
+  file:
+    path: /srv/app
+    owner: deployer
+    group: www-data
+    mode: 2755
+    recurse: true
+- name: add environment variables
+  template:
+    src: templates/environment.sh.j2
+    dest: /home/deployer/environment.sh
+    owner: deployer
+    group: www-data
+    mode: 0644
+- name: add bash profile for deployer
+  copy:
+    src: files/bash_profile.sh
+    dest: /home/deployer/.bash_profile
+    owner: deployer
+    group: www-data
+    mode: 0644
+  notify:
+    - reload env

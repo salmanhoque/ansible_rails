@@ -1,0 +1,7 @@
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+- name: reload env
+  become_user: deployer
+  shell: . /home/deployer/.bash_profile
