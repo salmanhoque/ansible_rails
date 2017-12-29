@@ -9,4 +9,4 @@
     - { role: users, tags: users }
     - { role: webserver, tags: webserver }
     - { role: database, tags: database }
-    
+    - { role: app_deploy, tags: app_deploy }

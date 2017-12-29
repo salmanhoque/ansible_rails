@@ -1,12 +1,12 @@
-- [ ] Postgres database server
-  - [ ] Database user
-  - [ ] Database
-  - [ ] Database permission
-- [ ] Web server
+- [X] Postgres database server
+  - [X] Database user
+  - [X] Database
+  - [X] Database permission
+- [X] Web server
   - [X] nginx
-  - [ ] nginx config
+  - [X] nginx config
 - [ ] App deploy
-  - [ ] clone app to /srv/app
-  - [ ] run bundle install
-  - [ ] run migration
+  - [X] clone app to /srv/app
+  - [x] run bundle install
+  - [x] run migration
   - [ ] start app

@@ -17,16 +17,11 @@
   user:
     name: deployer
     shell: /bin/bash
-    groups: www-data
+    groups:
+      - dev
+      - www-data
     createhome: yes
     state: present
-- name: create app directory
-  file:
-    path: /srv/app
-    owner: deployer
-    group: www-data
-    mode: 2755
-    recurse: true
 - name: add environment variables
   template:
     src: templates/environment.sh.j2

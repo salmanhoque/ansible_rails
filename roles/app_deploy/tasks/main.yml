@@ -1,0 +1,44 @@
+- name: install bundler
+  gem:
+    name: bundler
+    state: present
+- name: clone repo
+  git:
+    repo: https://github.com/salmanhoque/code_pipeline_build_deploy.git
+    dest: /srv/app
+    force: yes
+- name: create app directory
+  file:
+    path: /srv/app
+    owner: deployer
+    group: www-data
+    mode: 0755
+    recurse: true
+- name: install all required gems
+  bundler:
+    state: present
+    chdir: /srv/app
+- name: create assets
+  become_user: deployer
+  command: bundle exec rake assets:precompile
+  args:
+    chdir: /srv/app
+  environment:
+    RAILS_ENV: production
+- name: run migration
+  become_user: deployer
+  command: bundle exec rake db:migrate
+  args:
+    chdir: /srv/app
+  environment:
+    RAILS_ENV: production
+- name: run application
+  become_user: deployer
+  command: bundle exec unicorn -c config/unicorn.rb -E production -D
+  args:
+    chdir: /srv/app
+  environment:
+    RAILS_ENV: production
+    AWS_CODE_USER: "{{ vault_databse_user }}"
+    AWS_CODE_PASSWORD: "{{ vault_database_password }}"
+    SECRET_KEY_BASE: "{{ vault_secret_key_base }}"
