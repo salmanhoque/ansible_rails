@@ -6,6 +6,7 @@
     - postgresql
     - postgresql-contrib
     - libpq-dev
+    - python-psycopg2
 - name: ensure the PostgreSQL service is running
   service:
     name: postgresql
