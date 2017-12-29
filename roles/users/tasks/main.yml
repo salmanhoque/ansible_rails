@@ -1,0 +1,37 @@
+- name: create dev group
+  group:
+    name: dev
+    system: yes
+    state: present
+- name: create dev sudoers file
+  copy:
+    content: "%dev ALL=(ALL) NOPASSWD:ALL"
+    dest: /etc/sudoers.d/10dev_users
+    force: no
+    group: root
+    owner: root
+    mode: 0500
+- name: create dev users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.group }}"
+    shell: /bin/bash
+    createhome: yes
+    ssh_key_file: "{{ lookup('file', 'keys/' + item.name + '.pub') }}"
+    state: present
+  with_items: "{{ dev_users }}"
+- name: create app user
+  user:
+    name: deployer
+    groups: www-data
+    createhome: yes
+    system: true
+    state: present
+- name: create app directory
+  file:
+    path: /srv/app
+    owner: deployer
+    group: www-data
+    mode: 2755
+    recurse: true
+
